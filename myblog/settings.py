@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '9dzz7s^mgr^$%a#@s851%hze9p#r+6jg41fia9zjm0t4ds1lik'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -81,10 +81,8 @@ WSGI_APPLICATION = 'myblog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':  'terryding$blog',
-        'USER': 'terryding',
-        'PASSWORD': 'password123',
-        'HOST': 'terryding.mysql.pythonanywhere-services.com',
+        'NAME':  'blog',
+        'USER': 'root',
     }
 }
 
@@ -107,7 +105,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/terryding/myblog/blog/static'
 
 STATICFILES_DIRS = (
 	os.path.join(BASE_DIR, "static"),
@@ -115,3 +112,10 @@ STATICFILES_DIRS = (
 
 SITE_ID = 1
 
+#mail setting
+EMAIL_HOST = "smtp.163.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "m8k7j007@163.com"
+EMAIL_HOST_PASSWORD = "wonderful"
+EMAIL_USE_TLS = True
+SERVER_EMAIL = "m8k7j007@163.com"

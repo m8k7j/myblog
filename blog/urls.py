@@ -4,6 +4,8 @@ from django.contrib import admin
 
 from blog import views
 
+from blog.views import RSSFeed
+
 urlpatterns =[
 	url(r'^$', views.index, name='index'),
 	url(r'^(?P<id>(\d+))/$', views.detail, name='detail'),
@@ -17,4 +19,5 @@ urlpatterns =[
 	url(r'^update(?P<id>(\d+))/$', views.update, name='update'),
 	url(r'^delete(?P<id>(\d+))/$', views.delete, name='delete'),
 	url(r'^blog_update(?P<id>(\d+))/$', views.blog_update, name='blog_update'),
+	url(r'feed/$', RSSFeed(),name="RSS"),
 ]

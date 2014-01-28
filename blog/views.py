@@ -10,19 +10,44 @@ from django.contrib.syndication.views import Feed
 
 def index(request):
 	blogs = Blog.objects.all()
+	blogs_list = list(blogs)
+	tag_private = Tag.objects.get(tag_name='private')
+	blogs_private = tag_private.blog_set.all()
+	blogs_private_list = list(blogs_private)
+	for blog in blogs_list:
+		for blog_private in blogs_private_list:
+			if blog == blog_private:
+				blogs_list.remove(blog)
+	blogs_public = blogs_list
 	tags = Tag.objects.all()
-	paginator = Paginator(blogs,3)
-	page = request.GET.get('page')
-	try:
-		current_page = paginator.page(page)
-	except PageNotAnInteger:
-		current_page = paginator.page(1)
-	blog_list = current_page.object_list
-	print current_page.paginator.num_pages
-	print blog_list
-	return render_to_response('index.html',{'blog_list':blog_list,
-											'tags': tags,
-											'current_page':current_page})
+	tags_public = Tag.objects.exclude(tag_name='private')
+	user = request.session.get('username')
+	if user == 'terry':
+		paginator = Paginator(blogs,3)
+		page = request.GET.get('page')
+		try:
+			current_page = paginator.page(page)
+		except PageNotAnInteger:
+			current_page = paginator.page(1)
+		blog_list = current_page.object_list
+		print current_page.paginator.num_pages
+		print blog_list
+		return render_to_response('index.html',{'blog_list':blog_list,
+												'tags': tags,
+												'current_page':current_page})
+	else:
+		paginator = Paginator(blogs_public,3)
+		page = request.GET.get('page')
+		try:
+			current_page = paginator.page(page)
+		except PageNotAnInteger:
+			current_page = paginator.page(1)
+		blog_list = current_page.object_list
+		print current_page.paginator.num_pages
+		print blog_list
+		return render_to_response('index.html',{'blog_list':blog_list,
+												'tags': tags_public,
+												'current_page':current_page})
 def detail(request,id):
 	try:
 		blog = Blog.objects.get(id=id)
@@ -209,3 +234,22 @@ def blog_update(request,id):
 	id= Blog.objects.order_by('-date_time')[0].id
 	return HttpResponseRedirect('/blog/%s' %id)
 
+class RSSFeed(Feed):
+	title = "RSS Feed - blog"
+	link = "/blog/"
+	description = "Rss Feed - blog posts"
+
+	def items(self):
+		return Blog.objects.order_by('-date_time')
+	
+	def item_title(self,item):
+		return item.title
+	
+	def item_pubdate(self,item):
+		return item.date_time
+	
+	def item_description(self,item):
+		return item.content
+	
+	def item_link(self,item):
+		return "//10.8.116.111:8000/blog/"+str(item.id)+"/"
