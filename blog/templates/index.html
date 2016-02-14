@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class = "posts">
+	{% for blog in blog_list  %}
+	<section class="post">
+		<header class="post-header">
+			<h2 class= "post-title"><a href="{% url 'detail' id=blog.id %}">{{blog.title}}</a><h2>
+				<p class = "post-meta">
+					Time: <a class="post-author" href="#">{{blog.date_time | date:'Y M d'}}</a>&nbsp
+					Tag:
+					{% for tag in blog.tags.all %}
+					<a class="post-category" href="#">{{tag.tag_name|title}}</a>
+					{% endfor %}
+				</p>
+		</header>
+
+			<div class="post-description">
+				<p>
+					{{blog.content|safe|truncatewords:15}}
+				<a class="pure-button" href={% url 'detail' id=blog.id %}>Continue Read...</a>
+				</p>
+			</div>
+	</section>
+	{% endfor %}
+	{% if blog_list  and current_page.paginator.num_pages > 1 %}
+	<div>
+		<ul class="post">
+		{% if current_page.has_previous %}
+		  <li><a href="?page={{current_page.previous_page_number }}">previous page</a></li>
+		{% endif %}
+		{% if current_page.has_next %}
+		  <li><a href="?page={{current_page.next_page_number }}">next page</a></li>
+		{% endif %}
+		</ul>
+	</div>
+	{% endif %}
+{% endblock %}
