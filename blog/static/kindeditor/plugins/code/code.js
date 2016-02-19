@@ -46,10 +46,10 @@ KindEditor.plugin('code', function(K) {
 						var type = K('.ke-code-type', dialog.div).val(),
 							code = textarea.val(),
 							cls = type === '' ? '' :  ':' + type,
-							html = '<pre class="brush' + cls + '">\n' + K.escape(code) + '</pre> ';
+							html = '<pre class="brush' + cls + ' ">\n' + K.escape(code) + '</pre> ';
 						if (K.trim(code) === '') {
 							alert(lang.pleaseInput);
-							textarea[0].focus();
+							textarea[0].focus();	
 							return;
 						}
 						self.insertHtml(html).hideDialog().focus();
