@@ -13,6 +13,10 @@
 		editor = K.create('textarea[name="content"]',{
 			uploadJson: '/blog/uploadImg/',
 			cssPath: '/static/kindeditor/plugins/code/prettify.css',
+			items: [  
+                'code', 'fontname', 'fontsize', 'formatblock','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',  
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 
+                'insertunorderedlist', '|',  'emoticons', 'image', 'link']  
 		});
 	SyntaxHighlighter.all();
 	
