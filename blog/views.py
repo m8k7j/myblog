@@ -83,7 +83,7 @@ def uploadImg(request):
 		file_buff = buf.read()
 		time_format=str(time.strftime("%Y-%m-%d-%H%M%S",time.localtime()))
 		file_name = "img"+time_format+".jpg"
-		save_file("blog/static/image", file_name,file_buff)
+		save_file("/home/terryding/myblog/blog/static/image", file_name,file_buff)
 		dict_tmp = {}
 		dict_tmp['error']=0
 		dict_tmp['url']="/static/image/"+file_name
