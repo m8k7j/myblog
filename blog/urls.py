@@ -16,4 +16,5 @@ urlpatterns =[
 	url(r'^acc_login/$', views.acc_login,name='acc_login'),
 	url(r'^update(?P<id>(\d+))/$', views.update, name='update'),
 	url(r'^delete(?P<id>(\d+))/$', views.delete, name='delete'),
+	url(r'^blog_update(?P<id>(\d+))/$', views.blog_update, name='blog_update'),
 ]

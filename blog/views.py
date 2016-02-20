@@ -185,3 +185,27 @@ def delete(request,id):
 	else:
 		return HttpResponseRedirect('/blog/')
 		
+def blog_update(request,id):
+	content = request.POST.get('content')
+	author = Author.objects.get(name='terry')
+	title = request.POST.get('title')
+	tag_name_string= request.POST.get('tags')
+	tag_name_list = tag_name_string.split(',')
+	tags = Tag.objects.all()
+	for tag_name in tag_name_list:
+		for tag in tags:
+			if tag_name==tag.tag_name:
+				break
+		else:
+			Tag.objects.create(tag_name=tag_name)
+	blog = Blog.objects.get(id=id)
+	blog.delete()
+	blog=Blog.objects.create(title=title,
+						author=author,
+						content=content,
+						)
+	for tag_name in tag_name_list:
+		blog.tags.add(Tag.objects.get(tag_name=tag_name))
+	id= Blog.objects.order_by('-date_time')[0].id
+	return HttpResponseRedirect('/blog/%s' %id)
+

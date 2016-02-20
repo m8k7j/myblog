@@ -20,7 +20,7 @@
 
 			<div class="post-description">
 				<p>
-					{{blog.content|safe|truncatewords:15}}
+					{{blog.content|safe|slice:"15"}}
 				</p>
 				<p>
 				<a class="button-read" href={% url 'detail' id=blog.id %}>Continue Read...</a>

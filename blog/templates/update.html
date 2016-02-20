@@ -24,7 +24,7 @@
 </script>
 <div class = "posts">
 	<section class="post">
-		<form action={% url 'blog_add' %} class="pure-form pure-form-stacked" method="post">
+		<form action='/blog/blog_update{{id}}/' class="pure-form pure-form-stacked" method="post">
 		<label>title</label>
 		<input class="pure-input-1-4" name="title" type="text" value="{{title}}">
 		<label>tags</label>
