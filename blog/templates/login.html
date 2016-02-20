@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+	.wrapper {
+		margin-top: 25px;
+		padding: 20px 50px 20px 50px;
+		border: 1px solid;
+		border-color:#e8e8e8; 
+
+	}
+</style>
+<div class="wrapper">
+  <section class="post">
+  	<form action={% url 'acc_login' %} class="pure-form pure-form-stacked" method='post'>
+	<label>username</label>
+	<input class="pure-input-1-4" name="username" type="text">
+	<label>password</label>
+	<input class="pure-input-1-4" name="password" type="password">
+	<button class="pure-button" type="submit">Submit</button>
+	<p>{{login_error}}</p>
+	</form>
+  </section>
+{% endblock %}

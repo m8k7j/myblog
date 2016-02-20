@@ -12,13 +12,18 @@
 					{% for tag in blog.tags.all %}
 					<a class="post-category" href="#">{{tag.tag_name|title}}</a>
 					{% endfor %}
+					<a  href="{% url 'update' id=blog.id %}">edit</a>
+					<a  href="{% url 'delete' id=blog.id %}">|delete</a>
+
 				</p>
 		</header>
 
 			<div class="post-description">
 				<p>
 					{{blog.content|safe|truncatewords:15}}
-				<a class="pure-button button-read" href={% url 'detail' id=blog.id %}>Continue Read...</a>
+				</p>
+				<p>
+				<a class="button-read" href={% url 'detail' id=blog.id %}>Continue Read...</a>
 				</p>
 			</div>
 	</section>

@@ -33,7 +33,12 @@ def detail(request,id):
 											 'tags':tags,})
 
 def post(request):
-	return render_to_response('post.html')
+	user = request.session.get('username')
+	if user == 'terry':
+		return render_to_response('post.html')
+	else:
+		return HttpResponseRedirect('/blog/')
+		
 											 
 def blog_add(request):
 	content = request.POST.get('content')
@@ -114,3 +119,69 @@ def tag_blog(request,id):
 	return render_to_response('index.html',{'blog_list':blog_list,
 											'tag': tag,
 											'current_page':current_page})
+def login(request):
+	return render_to_response('login.html')
+
+def acc_login(request):
+	username = request.POST.get('username')
+	password = request.POST.get('password')
+	try:
+		author = Author.objects.get(name=username)
+		if password == author.password:
+			request.session['username'] = username
+			blogs = Blog.objects.all()
+			tags = Tag.objects.all()
+			paginator = Paginator(blogs,3)
+			page = request.GET.get('page')
+			try:
+				current_page = paginator.page(page)
+			except PageNotAnInteger:
+				current_page = paginator.page(1)
+			blog_list = current_page.object_list
+			return render_to_response('index.html',{'blog_list':blog_list,
+											'tags': tags,
+											'current_page':current_page,
+											'username':username,})
+		else:
+			return render_to_response('login.html',{'login_error': "wrong username or password"})
+	except:
+		return render_to_response('login.html',{'login_error': "wrong username or password"})
+
+def update(request,id):
+	try:
+		blog = Blog.objects.get(id=id)
+	except:
+		raise Http404
+	user = request.session.get('username')
+	if user == 'terry':
+		if blog:
+			title = blog.title
+			tags = blog.tags.all()
+			tag_str=""
+			tag_name=""
+			for tag in tags:
+				tag_str = tag_str+str(tag.tag_name)+','
+			for i in range(len(tag_str)-1):
+				tag_name = tag_name+tag_str[i]
+			content = blog.content
+			return render_to_response('update.html',{'title':title,
+												 'content':content,
+												 'tag_name':tag_name,
+												 'id': id,})
+	else:
+		return HttpResponseRedirect('/blog/')
+		
+	
+def delete(request,id):
+	try:
+		blog = Blog.objects.get(id=id)
+	except:
+		raise Http404
+	user = request.session.get('username')
+	if user == 'terry':
+		if blog:
+			blog.delete()
+			return HttpResponseRedirect('/blog/')
+	else:
+		return HttpResponseRedirect('/blog/')
+		

@@ -4,7 +4,7 @@ from django.contrib import admin
 from blog.models import Author,Tag,Blog
 
 class AuthorAdmin(admin.ModelAdmin):
-	list_display=('name','email','website')
+	list_display=('name','email')
 	search_field=('name')
 
 class BlogAdmin(admin.ModelAdmin):

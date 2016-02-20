@@ -6,7 +6,7 @@ class Author(models.Model):
 	"""docstring for Author"""
 	name = models.CharField(max_length=30)
 	email = models.EmailField(blank=True)
-	website = models.URLField(blank=True)
+	password = models.CharField(max_length=30,blank=True)
 
 	def __unicode__(self):
 		return self.name
