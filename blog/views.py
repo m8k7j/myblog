@@ -10,18 +10,43 @@ from django.contrib.syndication.views import Feed
 
 def index(request):
 	blogs = Blog.objects.all()
+        blogs_list = list(blogs)
+        tag_private = Tag.objects.get(tag_name='private')
+        blogs_private = tag_private.blog_set.all()
+        blogs_private_list = list(blogs_private)
+        for blog in blogs_list:
+            for blog_private in blogs_private_list:
+                if blog==blog_private:
+                    blogs_list.remove(blog)
+        blogs_public = blogs_list
 	tags = Tag.objects.all()
-	paginator = Paginator(blogs,3)
-	page = request.GET.get('page')
-	try:
+        tags_public = Tag.objects.exclude(tag_name='private')
+        user = request.session.get('username')
+        if user == 'terry':
+	    paginator =Paginator(blogs,3)
+	    page = request.GET.get('page')
+	    try:
 		current_page = paginator.page(page)
-	except PageNotAnInteger:
+	    except PageNotAnInteger:
 		current_page = paginator.page(1)
-	blog_list = current_page.object_list
-	print current_page.paginator.num_pages
-	print blog_list
-	return render_to_response('index.html',{'blog_list':blog_list,
+	    blog_list = current_page.object_list
+	    print current_page.paginator.num_pages
+	    print blog_list
+	    return render_to_response('index.html',{'blog_list':blog_list,
 											'tags': tags,
+											'current_page':current_page})
+        else:
+	    paginator = Paginator(blogs_public,3)
+	    page = request.GET.get('page')
+	    try:
+		current_page = paginator.page(page)
+	    except PageNotAnInteger:
+		current_page = paginator.page(1)
+	    blog_list = current_page.object_list
+	    print current_page.paginator.num_pages
+	    print blog_list
+	    return render_to_response('index.html',{'blog_list':blog_list,
+											'tags': tags_public,
 											'current_page':current_page})
 def detail(request,id):
 	try:
@@ -185,3 +210,41 @@ def delete(request,id):
 	else:
 		return HttpResponseRedirect('/blog/')
 		
+def blog_update(request,id):
+	content = request.POST.get('content')
+	author = Author.objects.get(name='terry')
+	title = request.POST.get('title')
+	tag_name_string= request.POST.get('tags')
+	tag_name_list = tag_name_string.split(',')
+	tags = Tag.objects.all()
+	for tag_name in tag_name_list:
+		for tag in tags:
+			if tag_name==tag.tag_name:
+				break
+		else:
+			Tag.objects.create(tag_name=tag_name)
+        blog = Blog.objects.get(id=id)
+        blog.delete()
+	blog=Blog.objects.create(title=title,
+						author=author,
+						content=content,
+						)
+	for tag_name in tag_name_list:
+		blog.tags.add(Tag.objects.get(tag_name=tag_name))
+	id= Blog.objects.order_by('-date_time')[0].id
+	return HttpResponseRedirect('/blog/%s' %id)
+
+class RSSFeed(Feed):
+        title = "RSS Feed - blog"
+        link = "/blog/"
+        description = "Rss Feed - blog posts"
+        def items(self):
+            return Blog.objects.order_by('-date_time')
+        def item_title(self,item):
+            return item.title
+        def item_pubdate(self,item):
+            return item.date_time
+        def item_description(self,item):
+            return item.content
+        def item_link(self,item):
+            return "//terryding.pythonanywhere.com/blog"+str(item.id)+"/"

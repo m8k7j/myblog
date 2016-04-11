@@ -55,7 +55,7 @@
 	};
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
-	Brush.aliases	= ['py', 'python'];
+	Brush.aliases	= ['py', 'python','html','shell'];
 
 	SyntaxHighlighter.brushes.Python = Brush;
 
