@@ -14,7 +14,7 @@
 			uploadJson: '/blog/uploadImg/',
 			cssPath: '/static/kindeditor/plugins/code/prettify.css',
 			items: [  
-                'code', 'fontname', 'fontsize', 'formatblock','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',  
+                'source','|','code', 'fontname', 'fontsize', 'formatblock','|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',  
                 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 
                 'insertunorderedlist', '|',  'emoticons', 'image', 'link']  
 		});
@@ -30,7 +30,7 @@
 		<label>tags</label>
 		<input class="pure-input-1-4" name="tags" type="text">
 		<label>content</label>
-		<textarea style="width:700px;height:400px;"  name='content'>&lt;strong&gt;HTML&lt;/strong&gt;</textarea>
+        <textarea style="width:700px;height:400px;"  name='content'></textarea>
 		<script type="text/javascript">SyntaxHighlighter.all();</script>
 		<button class="pure-button" type="submit">Submit</button>
 		</form>

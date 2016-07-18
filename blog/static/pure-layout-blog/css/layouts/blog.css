@@ -34,7 +34,7 @@ h3 {
 }
 
 .sidebar {
-    background: rgb(61, 79, 93);
+    background-color:#7798cb;
     color: #fff;
 }
 
@@ -47,7 +47,9 @@ h3 {
 }
 .brand-tagline {
     font-weight: 300;
-    color: rgb(176, 202, 219);
+    color: #fff;
+    border-bottom: 0.1em solid #eee;
+    padding: 0.4em 0;
 }
 
 .nav-list {
@@ -117,7 +119,7 @@ h3 {
     margin: 0 0.1em;
     padding: 0.3em 1em;
     color: #fff;
-    background: #66ccff;
+    background: #7798cb;
     font-size: 80%;
 }
     .post-category-design {
@@ -159,18 +161,15 @@ h3 {
 @media (min-width: 48em) {
     .content {
         padding: 2em 3em 0;
-        margin-left: 25%;
     }
 
     .header {
         margin: 40% 2em 0;
-        text-align: right;
+        text-align: left;
     }
 
     .sidebar {
-        position: fixed;
-        top: 0;
-        bottom: 0;
+        bottom: auto;
     }
 }
 *-------Menu Style -----------
@@ -214,4 +213,27 @@ h3 {
 	border-radius: 4px;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.2);
 	background: #FFF;
+}
+.small_picture {
+    width: 10em;
+    height: 10em;
+    border-radius: 10em;
+}
+.nav-item_tag a {
+    background: transparent;
+    color: #fff;
+    margin-top: 1em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 85%;
+    line-height: 0;
+}
+.nav-item_tag {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    padding-right: 1.5em;
+    white-space: nowrap;
+    margin-bottom: 0;
+    line-height: 0;
 }

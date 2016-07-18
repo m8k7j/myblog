@@ -14,16 +14,15 @@ def index(request):
         tag_private = Tag.objects.get(tag_name='private')
         blogs_private = tag_private.blog_set.all()
         blogs_private_list = list(blogs_private)
+        blogs_public = []
         for blog in blogs_list:
-            for blog_private in blogs_private_list:
-                if blog==blog_private:
-                    blogs_list.remove(blog)
-        blogs_public = blogs_list
+            if blog not in blogs_private_list:
+                blogs_public.append(blog)
 	tags = Tag.objects.all()
         tags_public = Tag.objects.exclude(tag_name='private')
         user = request.session.get('username')
         if user == 'terry':
-	    paginator =Paginator(blogs,3)
+	    paginator =Paginator(blogs,10)
 	    page = request.GET.get('page')
 	    try:
 		current_page = paginator.page(page)
@@ -34,9 +33,10 @@ def index(request):
 	    print blog_list
 	    return render_to_response('index.html',{'blog_list':blog_list,
 											'tags': tags,
+                                                                                        'username': user,
 											'current_page':current_page})
         else:
-	    paginator = Paginator(blogs_public,3)
+	    paginator = Paginator(blogs_public,10)
 	    page = request.GET.get('page')
 	    try:
 		current_page = paginator.page(page)
@@ -47,6 +47,7 @@ def index(request):
 	    print blog_list
 	    return render_to_response('index.html',{'blog_list':blog_list,
 											'tags': tags_public,
+                                                                                        'username': user,
 											'current_page':current_page})
 def detail(request,id):
 	try:
@@ -236,7 +237,7 @@ def blog_update(request,id):
 
 class RSSFeed(Feed):
         title = "RSS Feed - blog"
-        link = "/blog/"
+        link = "terryding.pythonanywhere.com/blog/"
         description = "Rss Feed - blog posts"
         def items(self):
             return Blog.objects.order_by('-date_time')
@@ -247,4 +248,4 @@ class RSSFeed(Feed):
         def item_description(self,item):
             return item.content
         def item_link(self,item):
-            return "//terryding.pythonanywhere.com/blog"+str(item.id)+"/"
+            return "//terryding.pythonanywhere.com/blog/"+str(item.id)+"/"
