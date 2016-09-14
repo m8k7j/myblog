@@ -22,7 +22,9 @@
 	</div>
 </div>
 <div id="layout" class="pure-g">
-	<div class="sidebar  pure-u-1-4">
+	<div class="pure-u-1-6">
+    </div>
+	<div class="sidebar  pure-u-1-5">
 		<div class="header">
 			<h1 class="brand-title">terry ding blog</h1>
             <img class="pure-img small_picture" src='/static/image/terry.jpg'>
@@ -36,7 +38,7 @@
 						<a class="pure-button" href="{% url 'post' %}">Post</a>
 					</li>
 				    <li class="nav-item">
-                    <a class="pure-button" href="{% url 'RSS' %}">RSS</a>&nbsp;&nbsp;
+                        <a class="pure-button" href="{% url 'RSS' %}">RSS</a>
 		            </li>
                     {% endif %}
 				</ul>
@@ -46,18 +48,21 @@
 				  <li class="nav-item_tag">
 				    <a class="pure-button" href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}</a>&nbsp;&nbsp;
 		          </li>
+                  <br/>
 				{% endfor %}
 				</ul>
 			</nav>
 		</div>
 	</div>
 	
-	<div class="content pure-u-3-4">
+	<div class="content pure-u-1-2">
 		<div>
 		{% block content %}
 		{% endblock %}
 		</div>
 	</div>
+	<div class="pure-u-1-6">
+    </div>
 				
 </div>
 </body>
