@@ -22,7 +22,7 @@ def index(request):
         tags_public = Tag.objects.exclude(tag_name='private')
         user = request.session.get('username')
         if user == 'terry':
-	    paginator =Paginator(blogs,10)
+	    paginator =Paginator(blogs,5)
 	    page = request.GET.get('page')
 	    try:
 		current_page = paginator.page(page)
@@ -36,7 +36,7 @@ def index(request):
                                                                                         'username': user,
 											'current_page':current_page})
         else:
-	    paginator = Paginator(blogs_public,10)
+	    paginator = Paginator(blogs_public,5)
 	    page = request.GET.get('page')
 	    try:
 		current_page = paginator.page(page)
