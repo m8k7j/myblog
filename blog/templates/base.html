@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="show a blog">
-		<title>Blog &ndash; Layout Exapmles &ndash; Pure</title>
+		<title>Terry Ding Blog</title>
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 <link rel="stylesheet" href="/static/pure-layout-blog/css/layouts/blog.css">
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
@@ -21,10 +21,9 @@
 	      </ul>
 	</div>
 </div>
+<div class="container">
 <div id="layout" class="pure-g">
-	<div class="pure-u-1-6">
-    </div>
-	<div class="sidebar  pure-u-1-5">
+	<div class="sidebar  pure-u-1 pure-u-md-1-4">
 		<div class="header">
 			<h1 class="brand-title">terry ding blog</h1>
             <img class="pure-img small_picture" src='/static/image/terry.jpg'>
@@ -55,15 +54,12 @@
 		</div>
 	</div>
 	
-	<div class="content pure-u-1-2">
-		<div>
+	<div class="content pure-u-1 pure-u-md-3-4">
 		{% block content %}
 		{% endblock %}
-		</div>
 	</div>
-	<div class="pure-u-1-6">
-    </div>
 				
+</div>
 </div>
 </body>
 </html>

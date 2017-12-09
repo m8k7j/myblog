@@ -24,18 +24,29 @@ h3 {
 }
 
 #layout {
+    padding: 10;
+}
+
+.container {
+    max-width: 1200px;
+    background-color: #fff;
+    margin: 0 auto;
+    position: relative;
     padding: 0;
 }
 
 .header {
-    text-align: auto;
+    text-align: center;
     top: auto;
-    margin: 3em auto;
+    margin: auto;
 }
 
 .sidebar {
-    background-color:#7798cb;
+    background-color:#006599;
+    border-right: 1px dashed;
     color: #fff;
+    text-align: center;
+    margin: auto;
 }
 
 .brand-title,
@@ -64,8 +75,9 @@ h3 {
 }
 .nav-item a {
     background: transparent;
-    border: 2px solid rgb(176, 202, 219);
+    border: 2px solid #01608f;
     color: #fff;
+    width: 200px;
     margin-top: 1em;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -95,9 +107,10 @@ h3 {
     padding-bottom: 2em;
 }
 .post-title {
-    font-size: 2em;
+    font-size: 30px;
     color: #222;
     margin-bottom: 0.2em;
+    margin-left: 0.4em;
 }
 .post-avatar {
     border-radius: 50px;
@@ -105,20 +118,22 @@ h3 {
     margin-left: 1em;
 }
 .post-description {
-    font-family: Georgia, "Cambria", serif;
+    font-family: Georgia, "Cambria", serif, 20px;
     color: #444;
-    line-height: 1.8em;
+    line-height: 1em;
+    margin-left: 0.8em;
 }
 .post-meta {
     color: #999;
-    font-size: 90%;
-    margin: 0;
+    font-size: 15px;
+    margin-left: 0.8em;
 }
 
 .post-category {
     margin: 0 0.1em;
     padding: 0.3em 1em;
     color: #fff;
+    border-radius: 5px;
     background: #7798cb;
     font-size: 80%;
 }
@@ -219,6 +234,7 @@ h3 {
     width: 10em;
     height: 10em;
     border-radius: 10em;
+    margin:auto;
 }
 .nav-item_tag a {
     background: transparent;
