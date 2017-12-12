@@ -70,6 +70,7 @@ def blog_add(request):
 	content = request.POST.get('content')
 	author = Author.objects.get(name='terry')
 	title = request.POST.get('title')
+	blog_pic= request.POST.get('blog_pic')
 	tag_name_string= request.POST.get('tags')
 	tag_name_list = tag_name_string.split(',')
 	tags = Tag.objects.all()
@@ -82,6 +83,7 @@ def blog_add(request):
 	blog=Blog.objects.create(title=title,
 						author=author,
 						content=content,
+						blog_pic=blog_pic,
 						)
 	for tag_name in tag_name_list:
 		blog.tags.add(Tag.objects.get(tag_name=tag_name))
@@ -183,6 +185,7 @@ def update(request,id):
 		if blog:
 			title = blog.title
 			tags = blog.tags.all()
+			blog_pic = blog.pic
 			tag_str=""
 			tag_name=""
 			for tag in tags:
@@ -193,6 +196,7 @@ def update(request,id):
 			return render_to_response('update.html',{'title':title,
 												 'content':content,
 												 'tag_name':tag_name,
+												 'blog_pic':blogpic,
 												 'id': id,})
 	else:
 		return HttpResponseRedirect('/blog/')
@@ -215,6 +219,7 @@ def blog_update(request,id):
 	content = request.POST.get('content')
 	author = Author.objects.get(name='terry')
 	title = request.POST.get('title')
+	blog_pic = request.POST.get('blog_pic')
 	tag_name_string= request.POST.get('tags')
 	tag_name_list = tag_name_string.split(',')
 	tags = Tag.objects.all()
@@ -229,6 +234,7 @@ def blog_update(request,id):
 	blog=Blog.objects.create(title=title,
 						author=author,
 						content=content,
+						blog_pic = blog_pic,
 						)
 	for tag_name in tag_name_list:
 		blog.tags.add(Tag.objects.get(tag_name=tag_name))

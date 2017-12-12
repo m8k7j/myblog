@@ -123,6 +123,14 @@ h3 {
     color: #444;
     line-height: 1em;
     margin-left: 0.8em;
+    padding-bottom: 3em;
+}
+.post-continue {
+    font-family: Georgia, "Cambria", serif, 20px;
+    color: #444;
+    line-height: 1em;
+    margin-left: 0.8em;
+    padding-bottom: 2em;
 }
 .post-meta {
     color: #999;
