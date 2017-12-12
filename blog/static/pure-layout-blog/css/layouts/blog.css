@@ -46,7 +46,8 @@ h3 {
     border-right: 1px dashed;
     color: #fff;
     text-align: center;
-    margin: auto;
+    margin: 0  auto;
+    
 }
 
 .brand-title,
@@ -225,7 +226,7 @@ h3 {
 }
 
 .button-read {
-	color:yellow;
+    color: rgb(61, 146, 201);
 	border-radius: 4px;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.2);
 	background: #FFF;
