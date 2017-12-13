@@ -185,7 +185,7 @@ def update(request,id):
 		if blog:
 			title = blog.title
 			tags = blog.tags.all()
-			blog_pic = blog.pic
+			blog_pic = blog.blog_pic
 			tag_str=""
 			tag_name=""
 			for tag in tags:
@@ -196,7 +196,7 @@ def update(request,id):
 			return render_to_response('update.html',{'title':title,
 												 'content':content,
 												 'tag_name':tag_name,
-												 'blog_pic':blogpic,
+												 'blog_pic':blog_pic,
 												 'id': id,})
 	else:
 		return HttpResponseRedirect('/blog/')
