@@ -1,5 +1,5 @@
 from django.shortcuts import render,render_to_response
-
+import markdown
 # Create your views here.
 from blog.models import Blog,Tag, Author
 from django.http import HttpResponse, Http404, HttpResponse,HttpResponseRedirect
@@ -53,10 +53,17 @@ def detail(request,id):
 	try:
 		blog = Blog.objects.get(id=id)
 		tags = blog.tags.all()
+		blog_content = markdown.markdown(blog.content,
+                        extensions=[
+                            'markdown.extensions.extra',
+                            'markdown.extensions.codehilite',
+                            'markdown.extensions.toc',
+                            ])
 	except Blog.DoesNotExist:
 		raise Http404
-	return render_to_response('detail.html',{'blog':blog,
-											 'tags':tags,})
+        return render_to_response('detail.html',{'blog':blog, 
+                                                 'blog_content':blog_content,
+					          'tags':tags,})
 
 def post(request):
 	user = request.session.get('username')
