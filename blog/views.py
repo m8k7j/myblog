@@ -1,5 +1,5 @@
 from django.shortcuts import render,render_to_response
-
+import markdown
 # Create your views here.
 from blog.models import Blog,Tag, Author
 from django.http import HttpResponse, Http404, HttpResponse,HttpResponseRedirect
@@ -53,10 +53,17 @@ def detail(request,id):
 	try:
 		blog = Blog.objects.get(id=id)
 		tags = blog.tags.all()
+		blog_content = markdown.markdown(blog.content,
+                        extensions=[
+                            'markdown.extensions.extra',
+                            'markdown.extensions.codehilite',
+                            'markdown.extensions.toc',
+                            ])
 	except Blog.DoesNotExist:
 		raise Http404
-	return render_to_response('detail.html',{'blog':blog,
-											 'tags':tags,})
+        return render_to_response('detail.html',{'blog':blog, 
+                                                 'blog_content':blog_content,
+					          'tags':tags,})
 
 def post(request):
 	user = request.session.get('username')
@@ -70,6 +77,7 @@ def blog_add(request):
 	content = request.POST.get('content')
 	author = Author.objects.get(name='terry')
 	title = request.POST.get('title')
+	blog_pic= request.POST.get('blog_pic')
 	tag_name_string= request.POST.get('tags')
 	tag_name_list = tag_name_string.split(',')
 	tags = Tag.objects.all()
@@ -82,6 +90,7 @@ def blog_add(request):
 	blog=Blog.objects.create(title=title,
 						author=author,
 						content=content,
+						blog_pic=blog_pic,
 						)
 	for tag_name in tag_name_list:
 		blog.tags.add(Tag.objects.get(tag_name=tag_name))
@@ -183,6 +192,7 @@ def update(request,id):
 		if blog:
 			title = blog.title
 			tags = blog.tags.all()
+			blog_pic = blog.blog_pic
 			tag_str=""
 			tag_name=""
 			for tag in tags:
@@ -193,6 +203,7 @@ def update(request,id):
 			return render_to_response('update.html',{'title':title,
 												 'content':content,
 												 'tag_name':tag_name,
+												 'blog_pic':blog_pic,
 												 'id': id,})
 	else:
 		return HttpResponseRedirect('/blog/')
@@ -215,6 +226,7 @@ def blog_update(request,id):
 	content = request.POST.get('content')
 	author = Author.objects.get(name='terry')
 	title = request.POST.get('title')
+	blog_pic = request.POST.get('blog_pic')
 	tag_name_string= request.POST.get('tags')
 	tag_name_list = tag_name_string.split(',')
 	tags = Tag.objects.all()
@@ -229,6 +241,7 @@ def blog_update(request,id):
 	blog=Blog.objects.create(title=title,
 						author=author,
 						content=content,
+						blog_pic = blog_pic,
 						)
 	for tag_name in tag_name_list:
 		blog.tags.add(Tag.objects.get(tag_name=tag_name))

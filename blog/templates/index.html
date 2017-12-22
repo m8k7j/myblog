@@ -6,6 +6,7 @@
 		<h1 class="content-subhead">POST</h1>
 		<header class="post-header">
 			<h2 class= "post-title"><a href="{% url 'detail' id=blog.id %}">{{blog.title}}</a><h2>
+                    <img class="post-avatar" alt="bog_pic" height="148" width="148" src={{blog.blog_pic}}>
 				<p class = "post-meta cotent-subead">
 					Time: <a class="post-author"href="#">{{blog.date_time | date:'Y M d'}}</a>&nbsp
 					Tag:
@@ -20,12 +21,14 @@
 
 			<div class="post-description">
 				<p>
-					{{blog.content|safe|slice:"30"}}
+					{{blog.content|safe|truncatechars:"50"}}
 				</p>
+			</div>
+            <div class="post-continue">
 				<p>
 				<a class="button-read" href={% url 'detail' id=blog.id %}>Continue Read...</a>
 				</p>
-			</div>
+            </div>
 	</section>
 	{% endfor %}
 	{% if blog_list  and current_page.paginator.num_pages > 1 %}

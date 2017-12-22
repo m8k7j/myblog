@@ -5,6 +5,22 @@
 <script type="text/javascript" src="/static/syntaxhighlighter/scripts/shBrushPython.js"></script>
 <link href="/static/syntaxhighlighter/styles/shCoreDefault.css" rel="stylesheet" type="text/css" />
 <link href="/static/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+<link href="/static/syntaxhighlighter/github-markdown.css" rel="stylesheet" type="text/css" />
+<link href="/static/syntaxhighlighter/github.css" rel="stylesheet" type="text/css" />
+<style>
+    .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 25px;
+    }
+    @media (max-width: 767px){
+        .markdown-body {
+            padding: 15px;
+        }
+    }
+</style>
 <div class = "posts">
 	<section class="post">
 		<header class="post-header">
@@ -22,9 +38,9 @@
 				</p>
 		</header>
 
-			<div class="post-description">
+			<div class="post-description markdown-body">
 				<p>
-					{{blog.content|safe}}
+					{{blog_content|safe}}
 				</p>
 			</div>
 	</section>

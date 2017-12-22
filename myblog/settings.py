@@ -41,6 +41,7 @@ INSTALLED_APPS = (
 	'blog',
 	'django_comments',
 	'django.contrib.sites',
+    'haystack',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -123,3 +124,11 @@ STATICFILES_DIRS = (
 
 SITE_ID = 1
 
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
