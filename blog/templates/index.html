@@ -31,16 +31,18 @@
             </div>
 	</section>
 	{% endfor %}
+    
 	{% if blog_list  and current_page.paginator.num_pages > 1 %}
-	<div>
-		<ul class="post">
+	<div class="pagination">
 		{% if current_page.has_previous %}
-		  <li><a href="?page={{current_page.previous_page_number }}">previous page</a></li>
+        <a href="?page={{current_page.previous_page_number }}"><i class="fa fa-chevron-circle-left"></i></a>
 		{% endif %}
+        <a>{{current_page.number}} of {{current_page.paginator.num_pages}}</a>
 		{% if current_page.has_next %}
-		  <li><a href="?page={{current_page.next_page_number }}">next page</a></li>
+        <a href="?page={{current_page.next_page_number }}"><i class="fa fa-chevron-circle-right"></i></a>
 		{% endif %}
-		</ul>
+		
 	</div>
 	{% endif %}
+   
 {% endblock %}
