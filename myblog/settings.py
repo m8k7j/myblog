@@ -38,16 +38,16 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'blog',
-	'django_comments',
-	'django.contrib.sites',
+    'blog',
+    'django_comments',
+    'django.contrib.sites',
     'haystack',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-#    'django.middleware.csrf.CsrfViewMiddleware',
+    #    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -81,13 +81,13 @@ WSGI_APPLICATION = 'myblog.wsgi.application'
 
 
 DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME':  'terryding$blog',
-#        'USER': 'terryding',
-#        'PASSWORD': 'password123',
-#        'HOST': 'terryding.mysql.pythonanywhere-services.com',
-#    }
+    #    'default': {
+    #        'ENGINE': 'django.db.backends.mysql',
+    #        'NAME':  'terryding$blog',
+    #        'USER': 'terryding',
+    #        'PASSWORD': 'password123',
+    #        'HOST': 'terryding.mysql.pythonanywhere-services.com',
+    #    }
 
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -120,7 +120,7 @@ STATIC_URL = '/static/'
 #STATIC_ROOT = '/home/terryding/myblog/blog/static'
 
 STATICFILES_DIRS = (
-	os.path.join(BASE_DIR, "static"),
+        os.path.join(BASE_DIR, "static"),
 )
 
 SITE_ID = 1

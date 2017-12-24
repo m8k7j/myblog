@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 <link rel="stylesheet" href="/static/pure-layout-blog/css/layouts/blog.css">
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+<script src="https://use.fontawesome.com/677eda7f91.js"></script>
 </head>
 <style>
     span .highlighted {
@@ -24,12 +25,9 @@
 	<li>
   <form role="search" method="get" id="searchform" action="{% url 'haystack_search' %}">
   <input type="search" name="q" placeholder="搜索" required>
-  <button type="submit"><span class="ion-ios-search-strong"></span></button>
+  <button type="submit" class="fa fa-search"></button>
   </form>
 	</li>
-		   <li>
-		      <a class="pull-right" href="#">welcome {{username}}</a>
-		  </li>
 	      </ul>
 	</div>
 </div>
