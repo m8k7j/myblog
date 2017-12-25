@@ -37,7 +37,6 @@ def index(request):
         print current_page.paginator.num_pages
         print blog_list
         return render_to_response('index.html', {'blog_list': blog_list,
-                                                 'tags': tags,
                                                  'username': user,
                                                  'current_page': current_page})
     else:
@@ -52,14 +51,14 @@ def index(request):
         print blog_list
         return render_to_response(
             'index.html',
-            {'blog_list': blog_list, 'tags': tags_public, 'username': user,
-             'current_page': current_page,
+            {'blog_list': blog_list, 'current_page': current_page, 'username': user,
              })
 
 
 def detail(request, id):
     try:
         blog = Blog.objects.get(id=id)
+        blog.increase_views()
         tags = blog.tags.all()
         blog_content = markdown.markdown(blog.content,
                                          extensions=[
@@ -435,3 +434,18 @@ class IndexView(ListView):
         }
 
         return data
+
+def archives(request, year, month):
+    blogs = Blog.objects.filter(date_time__year=year,
+                                    date_time__month=month,
+                                    )
+    paginator = Paginator(blogs, 5)
+    page = request.GET.get('page')
+    try:
+        current_page = paginator.page(page)
+    except PageNotAnInteger:
+        current_page = paginator.page(1)
+    blog_list = current_page.object_list
+    return render_to_response('index.html', {'blog_list': blog_list,
+                                             'username' : user,
+                                                 'current_page': current_page})

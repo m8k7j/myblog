@@ -1,3 +1,4 @@
+{% load blog_tags %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -52,15 +53,36 @@
                     {% endif %}
 				</ul>
 			<h2 class="brand-tagline">Category:</h2>
+            {% get_tags as tag_list %}
 				<ul class="nav-list">
-				{% for tag in tags %}
+				{% for tag in tag_list %}
 				  <li class="nav-item_tag">
 				    <a class="pure-button" href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}</a>&nbsp;&nbsp;
 		          </li>
                   <br/>
 				{% endfor %}
 				</ul>
+			<h2 class="brand-tagline">Recent Files:</h2>
+            {% get_recent_blogs as blog_list %}
+				<ul class="nav-list">
+				{% for blog in blog_list %}
+				  <li class="nav-item_tag">
+				    <a class="pure-button" href="{% url 'detail' id=blog.id %}">{{blog.title|title}}</a>&nbsp;&nbsp;
+		          </li>
+                  <br/>
+				{% endfor %}
+				</ul>
 			</nav>
+			<h2 class="brand-tagline">Archives:</h2>
+            {% archives as date_list %}
+				<ul class="nav-list">
+				{% for date_item in date_list %}
+				  <li class="nav-item_tag">
+                      <a class="pure-button" href="{% url 'archives' year=date_item.year month=date_item.month %}">{{date_item.year}}年{{date_item.month}}月</a>&nbsp;&nbsp;
+		          </li>
+                  <br/>
+				{% endfor %}
+				</ul>
 		</div>
 	</div>
 	

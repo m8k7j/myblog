@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^uploadImg/$', views.uploadImg, name='uploadImg'),
     url(r'^sub_comment/$', views.sub_comment, name='sub_comment'),
     url(r'^tag_blog(?P<id>(\d+))/$', views.tag_blog, name='tag_blog'),
+    url(r'^archives(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$', views.archives, name='archives'),
     url(r'^login/$', views.login, name='login'),
     url(r'^acc_login/$', views.acc_login, name='acc_login'),
     url(r'^update(?P<id>(\d+))/$', views.update, name='update'),
