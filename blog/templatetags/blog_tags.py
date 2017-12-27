@@ -20,7 +20,7 @@ def get_tags():
 
 @register.simple_tag
 def archives():
-    return Blog.objects.dates('date_time', 'month', order='DESC')
+    return Blog.objects.dates('date_time','year', order='DESC')
 
 
 @register.simple_tag

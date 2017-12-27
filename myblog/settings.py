@@ -81,21 +81,21 @@ WSGI_APPLICATION = 'myblog.wsgi.application'
 
 
 DATABASES = {
-    #    'default': {
-    #        'ENGINE': 'django.db.backends.mysql',
-    #        'NAME':  'terryding$blog',
-    #        'USER': 'terryding',
-    #        'PASSWORD': 'password123',
-    #        'HOST': 'terryding.mysql.pythonanywhere-services.com',
-    #    }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME':  'terryding$blog',
+            'USER': 'terryding',
+            'PASSWORD': 'password123',
+            'HOST': 'terryding.mysql.pythonanywhere-services.com',
+        }
 
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':  'blog',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-    }
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME':  'blog',
+#        'USER': 'root',
+#        'PASSWORD': 'password',
+#        'HOST': '127.0.0.1',
+#    }
 }
 
 
@@ -117,7 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = '/home/terryding/myblog/blog/static'
+STATIC_ROOT = '/home/terryding/myblog/blog/static'
 
 STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "static"),

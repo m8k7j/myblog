@@ -29,7 +29,6 @@ class Blog(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     content = models.TextField()
     date_time = models.DateTimeField(auto_now_add=True)
-    summary = models.CharField(max_length=100, default='this is a summary')
     views = models.PositiveIntegerField(default=0)
 
 

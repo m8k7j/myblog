@@ -78,7 +78,7 @@
 				<ul class="nav-list">
 				{% for date_item in date_list %}
 				  <li class="nav-item_tag">
-                      <a class="pure-button" href="{% url 'archives' year=date_item.year month=date_item.month %}">{{date_item.year}}年{{date_item.month}}月</a>&nbsp;&nbsp;
+                      <a class="pure-button" href="{% url 'archives' year=date_item.year month=date_item.month %}">{{date_item.year}}年</a>&nbsp;&nbsp;
 		          </li>
                   <br/>
 				{% endfor %}

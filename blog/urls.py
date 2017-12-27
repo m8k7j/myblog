@@ -8,7 +8,8 @@ from blog.views import RSSFeed
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^(?P<id>(\d+))/$', views.detail, name='detail'),
+    url(r'^blog/$', views.index, name='index'),
+    url(r'^blog/(?P<id>(\d+))/$', views.detail, name='detail'),
     url(r'^post/$', views.post, name='post'),
     url(r'^blog_add/$', views.blog_add, name='blog_add'),
     url(r'^uploadImg/$', views.uploadImg, name='uploadImg'),
