@@ -192,7 +192,7 @@ def acc_login(request):
             blog_list = current_page.object_list
             return render_to_response(
                 'index.html',
-                {'blog_list': blog_list, 'tags': tags,
+                {'blog_list_index': blog_list, 'tags': tags,
                  'current_page': current_page, 'username': username, })
         else:
             return render_to_response(
