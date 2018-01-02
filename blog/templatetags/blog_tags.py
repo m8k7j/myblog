@@ -4,6 +4,7 @@ import re
 from ..models import Blog, Tag
 from django import template
 from django.utils.safestring import mark_safe
+from django.db.models.aggregates import Count
 
 register = template.Library()
 
@@ -15,12 +16,18 @@ def get_recent_blogs(num=5):
 
 @register.simple_tag
 def get_tags():
-    return Tag.objects.exclude(tag_name='private')
+    return Tag.objects.exclude(tag_name='private').annotate(num_posts=Count('blog'))
+
 
 
 @register.simple_tag
 def archives():
     return Blog.objects.dates('date_time','year', order='DESC')
+
+
+@register.simple_tag
+def archives_num(year):
+    return Blog.objects.filter(date_time__year=year).count()
 
 
 @register.simple_tag

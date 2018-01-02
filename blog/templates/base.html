@@ -57,7 +57,7 @@
 				<ul class="nav-list">
 				{% for tag in tag_list %}
 				  <li class="nav-item_tag">
-				    <a class="pure-button" href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}</a>&nbsp;&nbsp;
+                  <a class="pure-button" href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}&nbsp;&nbsp;&nbsp;&nbsp;({{tag.num_posts}})</a>&nbsp;&nbsp;
 		          </li>
                   <br/>
 				{% endfor %}
@@ -78,7 +78,7 @@
 				<ul class="nav-list">
 				{% for date_item in date_list %}
 				  <li class="nav-item_tag">
-                      <a class="pure-button" href="{% url 'archives' year=date_item.year month=date_item.month %}">{{date_item.year}}年</a>&nbsp;&nbsp;
+                  <a class="pure-button" href="{% url 'archives' year=date_item.year month=date_item.month %}">{{date_item.year}}年&nbsp;&nbsp;&nbsp;&nbsp;({% archives_num date_item.year %})</a>&nbsp;&nbsp;
 		          </li>
                   <br/>
 				{% endfor %}
