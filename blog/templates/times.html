@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load blog_tags %}
+{% block content %}
+<link href='/static/css/time.css' rel="stylesheet">
+<script src="/static/js/time.js"></script>
+<main>
+  <div class="timebox">
+    <ul>
+  {% for blog in blog_list_index %}
+      <li><span>{{blog.date_time|date:'Y M d'}}</span><i><a href="{% url 'detail' id=blog.id %}" target="_blank">{{blog.title}}</a></i></li>
+  {% endfor %}
+  
+	{% if blog_list  and current_page.paginator.num_pages > 1 %}
+    </ul>
+  </div>
+	<div class="pagination">
+		{% if current_page.has_previous %}
+        <a href="/blog/?page={{current_page.previous_page_number }}"><i class="fa fa-chevron-circle-left"></i></a>
+		{% endif %}
+        <a>{{current_page.number}} of {{current_page.paginator.num_pages}}</a>
+		{% if current_page.has_next %}
+        <a href="/blog/?page={{current_page.next_page_number }}"><i class="fa fa-chevron-circle-right"></i></a>
+		{% endif %}
+		
+	</div>
+	{% endif %}
+  <div class="pagelist"><a title="Total record">&nbsp;<b>{{blog_count}}</b> </a>&nbsp;&nbsp;&nbsp;<b>1</b>&nbsp;<a href="/jstt/index_2.html">2</a>&nbsp;<a href="/jstt/index_3.html">3</a>&nbsp;<a href="/jstt/index_4.html">4</a>&nbsp;<a href="/jstt/index_5.html">5</a>&nbsp;<a href="/jstt/index_6.html">6</a>&nbsp;<a href="/jstt/index_14.html">next</a></div>
+   
+</main>
+{% endblock %}

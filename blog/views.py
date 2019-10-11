@@ -50,6 +50,42 @@ def index(request):
              'username': user, })
 
 
+def times(request):
+    blogs = Blog.objects.all()
+    blogs_list = list(blogs)
+    tag_private = Tag.objects.get(tag_name='private')
+    blogs_private = tag_private.blog_set.all()
+    blogs_private_list = list(blogs_private)
+    blogs_public = []
+    for blog in blogs_list:
+        if blog not in blogs_private_list:
+            blogs_public.append(blog)
+    user = request.session.get('username')
+    if user == 'terry':
+        paginator = Paginator(blogs, 5)
+        page = request.GET.get('page')
+        try:
+            current_page = paginator.page(page)
+        except PageNotAnInteger:
+            current_page = paginator.page(1)
+        blog_list = current_page.object_list
+        return render_to_response('times.html', {'blog_list_index': blog_list,
+                                                 'username': user,
+                                                 'blog_count': len(blog_list),
+                                                 'current_page': current_page})
+    else:
+        paginator = Paginator(blogs_public, 5)
+        page = request.GET.get('page')
+        try:
+            current_page = paginator.page(page)
+        except PageNotAnInteger:
+            current_page = paginator.page(1)
+        blog_list = current_page.object_list
+        return render_to_response(
+            'times.html',
+            {'blog_list_index': blog_list, 'current_page': current_page,
+                                                 'blog_count': len(blog_list),
+             'username': user, })
 def detail(request, id):
     try:
         blog = Blog.objects.get(id=id)

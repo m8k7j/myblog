@@ -1,97 +1,94 @@
 {% load blog_tags %}
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="show a blog">
-		<title>Terry Ding Blog</title>
-<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-<link rel="stylesheet" href="/static/pure-layout-blog/css/layouts/blog.css">
-<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
-<script src="https://use.fontawesome.com/677eda7f91.js"></script>
+<meta charset="utf-8">
+<title>Terry Ding Blog</title>
+<meta name="keywords" content="terry blog" />
+<meta name="description" content="terry's blog" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/static/css/base.css" rel="stylesheet">
+<link href="/static/css/index.css" rel="stylesheet">
+<link href="/static/css/m.css" rel="stylesheet">
+<link href="/static/css/info.css" rel="stylesheet">
+<script src="/static/js/jquery.min.js" ></script>
+<script src="/static/js/jquery.easyfader.min.js"></script>
+<script src="/static/js/hc-sticky.js"></script>
+<script src="/static/js/comm.js"></script>
+<script src="/static/js/scrollReveal.js"></script>
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
 </head>
-<style>
-    span .highlighted {
-        color: red;
-    }
-</style>>
-<div class="header1">
-	<div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
-	    <h1 class="pure-menu-heading" href="#">Terry</h1>
-	      <ul>
-	          <li>
-		      <a class="pull-right" href={% url 'login' %}>login</a>
-		  </li>
-	<li>
-  <form role="search" method="get" id="searchform" action="{% url 'haystack_search' %}">
-  <input type="search" name="q" placeholder="搜索" required>
-  <button type="submit" class="fa fa-search"></button>
-  </form>
-	</li>
-	      </ul>
-	</div>
-</div>
-<div class="container">
-<div id="layout" class="pure-g">
-	<div class="sidebar  pure-u-1 pure-u-md-1-4">
-		<div class="header">
-			<h1 class="brand-title">terry ding blog</h1>
-            <img class="pure-img small_picture" src='/static/image/terry.jpg'>
-			<nav class="nav">
-				<ul class="nav-list">
-					<li class="nav-item">
-						<a class="pure-button" href="{% url 'index'%}">Blog</a>
-					</li>
-                    {% if username == 'terry' %}
-					<li class="nav-item">
-						<a class="pure-button" href="{% url 'post' %}">Post</a>
-					</li>
-				    <li class="nav-item">
-                        <a class="pure-button" href="{% url 'RSS' %}">RSS</a>
-		            </li>
-                    {% endif %}
-				</ul>
-			<h2 class="brand-tagline">Category:</h2>
-            {% get_tags as tag_list %}
-				<ul class="nav-list">
-				{% for tag in tag_list %}
-				  <li class="nav-item_tag">
-                  <a class="pure-button" href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}&nbsp;&nbsp;&nbsp;&nbsp;({{tag.num_posts}})</a>&nbsp;&nbsp;
-		          </li>
-                  <br/>
-				{% endfor %}
-				</ul>
-			<h2 class="brand-tagline">Recent Files:</h2>
-            {% get_recent_blogs as blog_list %}
-				<ul class="nav-list">
-				{% for blog in blog_list %}
-				  <li class="nav-item_tag">
-				    <a class="pure-button" href="{% url 'detail' id=blog.id %}">{{blog.title|title}}</a>&nbsp;&nbsp;
-		          </li>
-                  <br/>
-				{% endfor %}
-				</ul>
-			</nav>
-			<h2 class="brand-tagline">Archives:</h2>
-            {% archives as date_list %}
-				<ul class="nav-list">
-				{% for date_item in date_list %}
-				  <li class="nav-item_tag">
-                  <a class="pure-button" href="{% url 'archives' year=date_item.year month=date_item.month %}">{{date_item.year}}年&nbsp;&nbsp;&nbsp;&nbsp;({% archives_num date_item.year %})</a>&nbsp;&nbsp;
-		          </li>
-                  <br/>
-				{% endfor %}
-				</ul>
-		</div>
-	</div>
-	
-	<div class="content pure-u-1 pure-u-md-3-4">
-		{% block content %}
-		{% endblock %}
-	</div>
-				
-</div>
-</div>
+<body>
+<header class="header-navigation" id="header">
+  <nav>
+    <div class="logo"><a href="{% url 'index' %}">Terry Ding's Blog</a></div>
+    <h2 id="mnavh"><span class="navicon"></span></h2>
+    <ul id="starlist">
+        <li><a href="{% url 'index' %}">首页</a></li>
+        <li><a href="{% url 'index' %}">归档</a></li>
+        <li><a href="{% url 'index' %}">分类</a></li>
+        <li><a href="{% url 'times' %}">时间轴</a></li>
+    </ul>
+    <div class="searchbox">
+    <div id="search_bar" class="search_bar">
+      <form  id="searchform" action="{% url 'haystack_search' %}" method="post" name="searchform">
+        <input class="input" placeholder="what do you find" type="text" name="keyboard" id="keyboard">
+        <input type="hidden" name="show" value="title" />
+        <input type="hidden" name="tempid" value="1" />
+        <input type="hidden" name="tbname" value="news">
+        <input type="hidden" name="Submit" value="search" />
+        <p class="search_ico"> <span></span></p>
+      </form>
+     </div> 
+    </div>
+  </nav>
+</header>
+<article> 
+  <!--banner begin-->
+  {% block content %}
+  {% endblock %}
+  <!--banner end-->
+  <aside class="r_box" >
+      <div class="about_me">
+        <h2>Introduction</h2>
+        <ul>
+          <i><img src="/static/image/terry.jpg"></i>
+          <p><b>terry</b>a network engineer</p>
+        </ul>
+      </div>
+      <div class="cloud">
+         <h2>tags cloud</h2>
+        {% get_tags as tag_list %}
+        <ul>
+          {% for tag in tag_list %}
+        <a href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}</a> 
+          {% endfor%}
+        </ul>
+        </div>
+      <div class="fenlei">
+        <h2>Archives</h2>
+        {% archives as date_list %}
+        <ul>
+          {% for date_item in date_list %}
+          <li><a href="{% url 'archives' year=date_item.year month=date_item.month %}">{{date_item.year}}年&nbsp;&nbsp;({% archives_num date_item.year %})</a></li>
+          {% endfor%}
+        </ul>
+      </div>
+      <div class="tuijian">
+        <h2><a href="#"class="current">Recent files</a>
+        {% get_recent_blogs as blog_list %}
+        {% for blog in blog_list%}
+        
+          <li><a href="{% url 'detail' id=blog.id %}">{{blog.title|title}}</a></li>
+        {% endfor %}
+      </div>
+  </aside>
+</article>
+<footer>
+  <p>Design by <a href="http://terryding.pythonanywhere.com" target="_blank">terry ding's blog</a> <a href="/"></a>/p>
+</footer>
+<a href="#" class="cd-top">Top</a>
 </body>
 </html>
