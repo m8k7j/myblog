@@ -50,6 +50,32 @@ def index(request):
              'username': user, })
 
 
+def detail(request, id):
+    try:
+        blog = Blog.objects.get(id=id)
+        blog.increase_views()
+        tags = blog.tags.all()
+        blog_content = markdown.markdown(blog.content,
+                                         extensions=[
+                                             'markdown.extensions.extra',
+                                             'markdown.extensions.codehilite',
+                                             'markdown.extensions.toc',
+                                             ])
+    except Blog.DoesNotExist:
+        raise Http404
+    return render_to_response('detail.html', {'blog': blog,
+                                              'blog_content': blog_content,
+                                              'tags': tags, })
+
+
+def post(request):
+    user = request.session.get('username')
+    if user == 'terry':
+        return render_to_response('post.html')
+    else:
+        return HttpResponseRedirect('/blog/')
+
+
 def times(request):
     blogs = Blog.objects.all()
     blogs_list = list(blogs)
@@ -84,33 +110,8 @@ def times(request):
         return render_to_response(
             'times.html',
             {'blog_list_index': blog_list, 'current_page': current_page,
-                                                 'blog_count': len(blog_list),
-             'username': user, })
-def detail(request, id):
-    try:
-        blog = Blog.objects.get(id=id)
-        blog.increase_views()
-        tags = blog.tags.all()
-        blog_content = markdown.markdown(blog.content,
-                                         extensions=[
-                                             'markdown.extensions.extra',
-                                             'markdown.extensions.codehilite',
-                                             'markdown.extensions.toc',
-                                             ])
-    except Blog.DoesNotExist:
-        raise Http404
-    return render_to_response('detail.html', {'blog': blog,
-                                              'blog_content': blog_content,
-                                              'tags': tags, })
-
-
-def post(request):
-    user = request.session.get('username')
-    if user == 'terry':
-        return render_to_response('post.html')
-    else:
-        return HttpResponseRedirect('/blog/')
-
+             'username': user, 'blog_count': len(blog_list)})
+    return render_to_response('times.html')
 
 def blog_add(request):
     content = request.POST.get('content')
@@ -205,6 +206,9 @@ def tag_blog(request, id):
         print blog
     return render_to_response('tag_blog.html', {'blog_list_tag': blog_list})
 
+
+def category(request):
+    return render_to_response('category.html')
 
 def login(request):
     return render_to_response('login.html')
@@ -344,3 +348,38 @@ def archives(request, year, month):
     blog_list = current_page.object_list
     return render_to_response('archive.html', {'blog_list_archive': blog_list,
                                                'current_page': current_page})
+
+def list_blog(request):
+    blogs = Blog.objects.all()
+    blogs_list = list(blogs)
+    tag_private = Tag.objects.get(tag_name='private')
+    blogs_private = tag_private.blog_set.all()
+    blogs_private_list = list(blogs_private)
+    blogs_public = []
+    for blog in blogs_list:
+        if blog not in blogs_private_list:
+            blogs_public.append(blog)
+    user = request.session.get('username')
+    if user == 'terry':
+        paginator = Paginator(blogs, 5)
+        page = request.GET.get('page')
+        try:
+            current_page = paginator.page(page)
+        except PageNotAnInteger:
+            current_page = paginator.page(1)
+        blog_list = current_page.object_list
+        return render_to_response('list.html', {'blog_list_index': blog_list,
+                                                 'username': user,
+                                                 'current_page': current_page})
+    else:
+        paginator = Paginator(blogs_public, 5)
+        page = request.GET.get('page')
+        try:
+            current_page = paginator.page(page)
+        except PageNotAnInteger:
+            current_page = paginator.page(1)
+        blog_list = current_page.object_list
+        return render_to_response(
+            'list.html',
+            {'blog_list_index': blog_list, 'current_page': current_page,
+             'username': user, })

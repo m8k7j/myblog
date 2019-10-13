@@ -27,25 +27,21 @@
     <h2 id="mnavh"><span class="navicon"></span></h2>
     <ul id="starlist">
         <li><a href="{% url 'index' %}">首页</a></li>
-        <li><a href="{% url 'index' %}">归档</a></li>
-        <li><a href="{% url 'index' %}">分类</a></li>
+        <li><a href="{% url 'list_blog' %}">归档</a></li>
+        <li><a href="{% url 'category' %}">分类</a></li>
         <li><a href="{% url 'times' %}">时间轴</a></li>
     </ul>
     <div class="searchbox">
     <div id="search_bar" class="search_bar">
-      <form  id="searchform" action="{% url 'haystack_search' %}" method="post" name="searchform">
-        <input class="input" placeholder="what do you find" type="text" name="keyboard" id="keyboard">
-        <input type="hidden" name="show" value="title" />
-        <input type="hidden" name="tempid" value="1" />
-        <input type="hidden" name="tbname" value="news">
-        <input type="hidden" name="Submit" value="search" />
-        <p class="search_ico"> <span></span></p>
+      <form  id="searchform" action="{% url 'haystack_search' %}" method="get" name="searchform">
+        <input class="input" placeholder="what do you find" type="search" name="q" id="keyboard">
+        <p class="search_ico"><span></span></p>
       </form>
-     </div> 
+     </div>
     </div>
   </nav>
 </header>
-<article> 
+<article>
   <!--banner begin-->
   {% block content %}
   {% endblock %}
@@ -63,7 +59,7 @@
         {% get_tags as tag_list %}
         <ul>
           {% for tag in tag_list %}
-        <a href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}</a> 
+        <a href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}</a>
           {% endfor%}
         </ul>
         </div>
@@ -80,14 +76,14 @@
         <h2><a href="#"class="current">Recent files</a>
         {% get_recent_blogs as blog_list %}
         {% for blog in blog_list%}
-        
+
           <li><a href="{% url 'detail' id=blog.id %}">{{blog.title|title}}</a></li>
         {% endfor %}
       </div>
   </aside>
 </article>
 <footer>
-  <p>Design by <a href="http://terryding.pythonanywhere.com" target="_blank">terry ding's blog</a> <a href="/"></a>/p>
+  <p>Design by <a href="http://terryding.pythonanywhere.com" target="_blank">terry ding's blog</a> <a href="/"></a></p>
 </footer>
 <a href="#" class="cd-top">Top</a>
 </body>

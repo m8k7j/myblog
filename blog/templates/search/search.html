@@ -2,48 +2,24 @@
 {% load highlight %}
 {% block content %}
 {% if query %}
-<div class = "posts">
-	{% for result in page.object_list  %}
-	<section class="post">
-		<h1 class="content-subhead">POST</h1>
-		<header class="post-header">
-			<h2 class= "post-title"><a href="{% url 'detail' id=result.object.id %}">{% highlight result.object.title with query %}</a><h2>
-                    <img class="post-avatar" alt="bog_pic" height="148" width="148" src={{blog.blog_pic}}>
-				<p class = "post-meta cotent-subead">
-					Time: <a class="post-author"href="#">{{result.object.date_time | date:'Y M d'}}</a>&nbsp
-					Tag:
-					{% for tag in result.object.tags.all %}
-					<a class="post-category" href="#">{{tag.tag_name|title}}</a>
-					{% endfor %}
-					<a  href="{% url 'update' id=result.object.id %}">edit</a>
-					<a  href="{% url 'delete' id=result.object.id %}">|delete</a>
-
-				</p>
-		</header>
-
-			<div class="post-description">
-				<p>
-					{{result.object.content|safe|truncatechars:"50"}}
-				</p>
-			</div>
-            <div class="post-continue">
-				<p>
-				<a class="button-read" href={% url 'detail' id=result.object.id %}>Continue Read...</a>
-				</p>
-            </div>
-	</section>
-	{% endfor %}
-	{% if blog_list  and current_page.paginator.num_pages > 1 %}
-	<div>
-		<ul class="post">
-		{% if current_page.has_previous %}
-		  <li><a href="?page={{current_page.previous_page_number }}">previous page</a></li>
-		{% endif %}
-		{% if current_page.has_next %}
-		  <li><a href="?page={{current_page.next_page_number }}">next page</a></li>
-		{% endif %}
-		</ul>
-	</div>
-	{% endif %}
-	{% endif %}
-{% endblock %}
+ <main>
+    {% for result in page.object_list %}
+    <div class="blogs" data-scroll-reveal="enter bottom over 1s" >
+      <h3 class="blogtitle"><a href="{% url 'detail' id=result.object.id %}" target="_blank">{% highlight result.object.title with query %}</a></h3>
+      <span class="blogpic"><a href="/" title=""><img src="{{blog.blog_pic}}" alt=""></a></span>
+      <p class="blogtext">{{result.object.content|safe|truncatechars:"50"}}</p>
+      <div class="bloginfo">
+        <ul>
+          <li class="author"><a href="/">terry</a></li>
+          {% for tag in result.object.tags.all %}
+          <li class="lmname"><a href="#">{{tag.tag_name|title}}</a></li>
+          {% endfor %}
+          <li class="timer">{{ result.object.date_time|date:'Y M d'}}</li>
+          <li class="view"><span>{{result.object.views}}</span> views counter</li>
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+  </main>
+  {% endif %}
+  {% endblock %}

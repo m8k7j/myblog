@@ -19,11 +19,11 @@
   <!--banner end-->
   <div class="toppic">
     <li> <a href="/" target="_blank"> <i><img src="/static/images/p1.jpg"></i>
-      <h2>myself</h2>
-      <span>study</span> </a> </li>
+      <h2>life</h2>
+      <span>生活感悟</span> </a> </li>
     <li> <a href="/" target="_blank"> <i><img src="/static/images/p2.jpg"></i>
-      <h2>about</h2>
-      <span>study</span> </a> </li>
+      <h2>study</h2>
+      <span>工作学习</span> </a> </li>
   </div>
   <main>
   
@@ -31,8 +31,8 @@
     <div class="blogs" data-scroll-reveal="enter bottom over 1s" >
       {% for blog in blog_list_index %}
       <h3 class="blogtitle"><a href="{% url 'detail' id=blog.id %}" target="_blank">{{blog.title}}</a></h3>
-      <span class="blogpic"><a href="/" title=""><img src="images/1.jpg" alt=""></a></span>
-      <p class="blogtext">{{blog.content | safe | slice:"30"}}</p>
+      <span class="blogpic"><a href="/" title=""><img src="{{blog.blog_pic}}" alt=""></a></span>
+      <p class="blogtext">{% get_blog_summary blog.id %}</p>
       <div class="bloginfo">
         <ul>
           <li class="author"><a href="#">terry</a></li>

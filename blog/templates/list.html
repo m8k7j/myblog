@@ -2,10 +2,10 @@
 {% load blog_tags %}
 {% block content %}
  <main>
-    {% for blog in blog_list_archive %}
+    {% for blog in blog_list_index %}
     <div class="blogs" data-scroll-reveal="enter bottom over 1s" >
       <h3 class="blogtitle"><a href="{% url 'detail' id=blog.id %}" target="_blank">{{blog.title}}</a></h3>
-      <span class="blogpic"><a href="/" title=""><img src="{{blog.blog_pic}}" alt=""></a></span>
+      <span class="blogpic"><a href="#" title=""><img src="{{blog.blog_pic}}" alt="" height="100" width="100"></a></span>
       <p class="blogtext">{% get_blog_summary blog.id %}</p>
       <div class="bloginfo">
         <ul>

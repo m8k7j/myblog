@@ -18,7 +18,10 @@ def get_recent_blogs(num=5):
 def get_tags():
     return Tag.objects.exclude(tag_name='private').annotate(num_posts=Count('blog'))
 
-
+@register.simple_tag
+def get_tag_blogs(id):
+    tag = Tag.objects.get(id=id)
+    return Blog.objects.filter(tags=tag)
 
 @register.simple_tag
 def archives():

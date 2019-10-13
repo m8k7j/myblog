@@ -9,9 +9,11 @@ from blog.views import RSSFeed
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^blog/$', views.index, name='index'),
+    url(r'^list/$', views.list_blog, name='list_blog'),
+    url(r'^category/$', views.category, name='category'),
     url(r'^blog/(?P<id>(\d+))/$', views.detail, name='detail'),
     url(r'^post/$', views.post, name='post'),
-    url(r'^time/$', views.times, name='times'),
+    url(r'^times/$', views.times, name='times'),
     url(r'^blog_add/$', views.blog_add, name='blog_add'),
     url(r'^uploadImg/$', views.uploadImg, name='uploadImg'),
     url(r'^blog/sub_comment/$', views.sub_comment, name='sub_comment'),
