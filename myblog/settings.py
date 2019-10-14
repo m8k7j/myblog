@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'myblog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-
-DATABASES = {
+if not DEBUG:
+    DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME':  'terryding$blog',
@@ -88,6 +88,17 @@ DATABASES = {
             'PASSWORD': 'password123',
             'HOST': 'terryding.mysql.pythonanywhere-services.com',
         }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME':  'blog',
+            'USER': 'root',
+            'PASSWORD': 'password',
+            'HOST': '10.8.116.13',
+        }
+    }
 
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
