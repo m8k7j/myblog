@@ -44,5 +44,16 @@
       </div>
     </div>
       {% endfor %}
+	<div class="pagelist">
+
+		{% if current_page.has_previous %}
+        <a href="/blog/?page={{current_page.previous_page_number }}">previous page</a>
+		{% endif %}
+        <b>{{current_page.number}} of {{current_page.paginator.num_pages}}</b>
+		{% if current_page.has_next %}
+        <a href="/blog/?page={{current_page.next_page_number }}">next page</a>
+		{% endif %}
+		
+	</div>
   </main>
   {% endblock %}

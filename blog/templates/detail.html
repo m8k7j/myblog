@@ -33,8 +33,10 @@
         </ul>
       </div>
       {% for tag in blog.tags.all %}
-      <div class="tags"><a href="/" target="_blank">{{tag.tag_name}}</a> &nbsp; 
+      <div class="tags"><a href="#" target="_blank">{{tag.tag_name}}</a> &nbsp;&nbsp;
       {% endfor %}
+      </div>
+
       <div class="news_con markdown-body">
       <p>
       {{blog_content|safe}}
@@ -42,9 +44,14 @@
       </div>
     </div>
     <div class="nextinfo">
-      <p>previous<a href="/news/life/2018-03-13/804.html">a news day</a></p>
-      <p>next<a href="/news/life/">go to the list</a></p>
+        {% if previous %}
+        <p><a href="{% url 'detail' id=previous %}">previous</a></p>
+        {% endif %}
+        {% if next %}
+        <p><a href="{% url 'detail' id=next %}">next</a></p>
+        {% endif %}
     </div>
+<!--
     <div class="news_pl">
       <h2>comment</h2>
 	<ul>
@@ -57,6 +64,7 @@
 		</li>
 		{% endfor %}
       </ul>
+
     </div>
 	<h3>leave a comment</h3>
 	<form action="/blog/sub_comment/" class="pure-form pure-form-stacked" method="post">
@@ -64,7 +72,7 @@
 	<input type="hidden" name="blog_id" value={{blog.id}}>
 	<input type="submit" class="pure-button" value="ok">
 	</form>
-
+-->
 <script type="text/javascript">SyntaxHighlighter.all();</script>
   </div>
   </main>

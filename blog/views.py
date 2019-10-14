@@ -33,8 +33,10 @@ def index(request):
         except PageNotAnInteger:
             current_page = paginator.page(1)
         blog_list = current_page.object_list
+        nums_page = paginator.page_range
         return render_to_response('index.html', {'blog_list_index': blog_list,
                                                  'username': user,
+                                                 'nums_page': nums_page,
                                                  'current_page': current_page})
     else:
         paginator = Paginator(blogs_public, 5)
@@ -44,9 +46,11 @@ def index(request):
         except PageNotAnInteger:
             current_page = paginator.page(1)
         blog_list = current_page.object_list
+        nums_page = paginator.page_range
         return render_to_response(
             'index.html',
             {'blog_list_index': blog_list, 'current_page': current_page,
+             'nums_page': nums_page,
              'username': user, })
 
 
@@ -55,6 +59,16 @@ def detail(request, id):
         blog = Blog.objects.get(id=id)
         blog.increase_views()
         tags = blog.tags.all()
+        id = int(id)
+        if id > 1:
+            previous_blog_id = id - 1
+        else:
+            previous_blog_id = None
+        if id < len(Blog.objects.all()):
+            next_blog_id = id + 1
+        else:
+            next_blog_id = None
+
         blog_content = markdown.markdown(blog.content,
                                          extensions=[
                                              'markdown.extensions.extra',
@@ -65,6 +79,8 @@ def detail(request, id):
         raise Http404
     return render_to_response('detail.html', {'blog': blog,
                                               'blog_content': blog_content,
+                                              'previous': previous_blog_id,
+                                              'next': next_blog_id,
                                               'tags': tags, })
 
 
@@ -88,29 +104,35 @@ def times(request):
             blogs_public.append(blog)
     user = request.session.get('username')
     if user == 'terry':
-        paginator = Paginator(blogs, 5)
+        paginator = Paginator(blogs, 50)
         page = request.GET.get('page')
         try:
             current_page = paginator.page(page)
         except PageNotAnInteger:
             current_page = paginator.page(1)
         blog_list = current_page.object_list
+        nums_page = paginator.page_range
+        print(list(nums_page))
         return render_to_response('times.html', {'blog_list_index': blog_list,
                                                  'username': user,
-                                                 'blog_count': len(blog_list),
+                                                 'nums_page': nums_page,
+                                                 'blog_count': len(blogs),
                                                  'current_page': current_page})
     else:
-        paginator = Paginator(blogs_public, 5)
+        paginator = Paginator(blogs_public, 50)
         page = request.GET.get('page')
         try:
             current_page = paginator.page(page)
         except PageNotAnInteger:
             current_page = paginator.page(1)
         blog_list = current_page.object_list
+        nums_page = paginator.page_range
+        print(list(nums_page))
         return render_to_response(
             'times.html',
             {'blog_list_index': blog_list, 'current_page': current_page,
-             'username': user, 'blog_count': len(blog_list)})
+             'nums_page': nums_page,
+             'username': user, 'blog_count': len(blogs)})
     return render_to_response('times.html')
 
 def blog_add(request):
@@ -193,6 +215,7 @@ def sub_comment(request):
 def tag_blog(request, id):
     tag = Tag.objects.get(id=id)
     blogs = Blog.objects.filter(tags=tag)
+    category = int(id)
     for blog in blogs:
         print blog
     paginator = Paginator(blogs, 3)
@@ -202,13 +225,50 @@ def tag_blog(request, id):
     except PageNotAnInteger:
         current_page = paginator.page(1)
     blog_list = current_page.object_list
+    nums_page = paginator.page_range
     for blog in blog_list:
         print blog
-    return render_to_response('tag_blog.html', {'blog_list_tag': blog_list})
+    return render_to_response('tag_blog.html', {'blog_list_tag': blog_list,
+                                                'nums_page': nums_page,
+                                                'current_page': current_page,
+                                                'category': category,
+                                                'blog_count': len(blogs)})
 
 
 def category(request):
-    return render_to_response('category.html')
+    blogs = Blog.objects.all()
+    blogs_list = list(blogs)
+    tag_private = Tag.objects.get(tag_name='private')
+    blogs_private = tag_private.blog_set.all()
+    blogs_private_list = list(blogs_private)
+    blogs_public = []
+    for blog in blogs_list:
+        if blog not in blogs_private_list:
+            blogs_public.append(blog)
+    user = request.session.get('username')
+    if user == 'terry':
+        paginator = Paginator(blogs, 5)
+        page = request.GET.get('page')
+        try:
+            current_page = paginator.page(page)
+        except PageNotAnInteger:
+            current_page = paginator.page(1)
+        blog_list = current_page.object_list
+        return render_to_response('category.html', {'blog_list_index': blog_list,
+                                                 'username': user,
+                                                 'current_page': current_page})
+    else:
+        paginator = Paginator(blogs_public, 5)
+        page = request.GET.get('page')
+        try:
+            current_page = paginator.page(page)
+        except PageNotAnInteger:
+            current_page = paginator.page(1)
+        blog_list = current_page.object_list
+        return render_to_response(
+            'category.html',
+            {'blog_list_index': blog_list, 'current_page': current_page,
+             'username': user, })
 
 def login(request):
     return render_to_response('login.html')
@@ -333,12 +393,12 @@ class RSSFeed(Feed):
 
 
 def archives(request, year, month):
-    print year, month
+    print year
     blogs = Blog.objects.filter(
                                 date_time__year=year
                                 ).order_by('-date_time')
     for blog in blogs:
-        print blog
+        print blog.date_time.year
     paginator = Paginator(blogs, 5)
     page = request.GET.get('page')
     try:
@@ -346,7 +406,11 @@ def archives(request, year, month):
     except PageNotAnInteger:
         current_page = paginator.page(1)
     blog_list = current_page.object_list
+    nums_page = paginator.page_range
     return render_to_response('archive.html', {'blog_list_archive': blog_list,
+                                               'nums_page': nums_page,
+                                               'blog_count': len(blogs),
+                                               'year': blog.date_time.year,
                                                'current_page': current_page})
 
 def list_blog(request):
@@ -368,8 +432,11 @@ def list_blog(request):
         except PageNotAnInteger:
             current_page = paginator.page(1)
         blog_list = current_page.object_list
+        nums_page = paginator.page_range
         return render_to_response('list.html', {'blog_list_index': blog_list,
                                                  'username': user,
+                                                 'nums_page': nums_page,
+                                                 'blog_count': len(blogs),
                                                  'current_page': current_page})
     else:
         paginator = Paginator(blogs_public, 5)
@@ -379,7 +446,10 @@ def list_blog(request):
         except PageNotAnInteger:
             current_page = paginator.page(1)
         blog_list = current_page.object_list
+        nums_page = paginator.page_range
         return render_to_response(
             'list.html',
             {'blog_list_index': blog_list, 'current_page': current_page,
+             'nums_page': nums_page,
+             'blog_count': len(blogs),
              'username': user, })

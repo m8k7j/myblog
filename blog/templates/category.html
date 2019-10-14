@@ -4,7 +4,7 @@
  <main>
     {% get_tags as tag_list %}
     {% for tag in tag_list %}
-    <h1>{{tag.name|title}}</h1>
+    <h1>{{tag.tag_name|title}}</h1>
     {% get_tag_blogs tag.id as blogs %}
     {% for blog in blogs %}
     <div class="blogs" data-scroll-reveal="enter bottom over 1s" >
@@ -24,5 +24,16 @@
     </div>
     {% endfor %}
     {% endfor %}
+	<div class="pagelist">
+
+		{% if current_page.has_previous %}
+        <a href="/category/?page={{current_page.previous_page_number }}">previous page</a>
+		{% endif %}
+        <b>{{current_page.number}} of {{current_page.paginator.num_pages}}</b>
+		{% if current_page.has_next %}
+        <a href="/category/?page={{current_page.next_page_number }}">next page</a>
+		{% endif %}
+		
+	</div>
   </main>
   {% endblock %}

@@ -19,5 +19,16 @@
       </div>
     </div>
     {% endfor %}
+    <div class="pagelist">
+        <a title="Total record">&nbsp;<b>{{blog_count}}</b></a>&nbsp;&nbsp;&nbsp;
+        <b>{{current_page.number}} of {{current_page.paginator.num_pages}}</b>&nbsp;
+        {% for num in nums_page %}
+        <a href="/list/?page={{num}}">{{num}}</a>&nbsp;
+        {% endfor %}
+        {% if current_page.has_next %}
+        <a href="/list/?page={{current_page.next_page_number}}">next</a></div>
+        {% endif %}
+		
+	</div>
   </main>
   {% endblock %}

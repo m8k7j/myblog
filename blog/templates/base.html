@@ -51,7 +51,7 @@
         <h2>Introduction</h2>
         <ul>
           <i><img src="/static/image/terry.jpg"></i>
-          <p><b>terry</b>a network engineer</p>
+          <p><b>terry</b>  生如夏花之灿烂，死如秋叶之静美， 热爱网络，热爱生活，敬畏生命，天人合一</p>
         </ul>
       </div>
       <div class="cloud">
@@ -63,6 +63,15 @@
           {% endfor%}
         </ul>
         </div>
+      <div class="fenlei">
+        <h2>category</h2>
+            {% get_tags as tag_list %}
+        <ul>
+            {% for tag in tag_list %}
+            <li><a href="{% url 'tag_blog' id=tag.id %}">{{tag.tag_name|title}}&nbsp;&nbsp;&nbsp;({{tag.num_posts }})</a></li>
+            {% endfor %}
+        </ul>
+      </div>
       <div class="fenlei">
         <h2>Archives</h2>
         {% archives as date_list %}
