@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block content %} 
+{% block content %}
 {% load comments %}
 <script type="text/javascript" src="/static/syntaxhighlighter/scripts/shCore.js"></script>
 <script type="text/javascript" src="/static/syntaxhighlighter/scripts/shBrushPython.js"></script>
@@ -45,10 +45,10 @@
     </div>
     <div class="nextinfo">
         {% if previous %}
-        <p><a href="{% url 'detail' id=previous %}">previous</a></p>
+        <p>上一篇: <a href="{% url 'detail' id=previous %}">{{pre_blog_title}}</a></p>
         {% endif %}
         {% if next %}
-        <p><a href="{% url 'detail' id=next %}">next</a></p>
+        <p>下一篇: <a href="{% url 'detail' id=next %}">{{next_blog_title}}</a></p>
         {% endif %}
     </div>
 <!--

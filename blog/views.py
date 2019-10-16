@@ -62,12 +62,16 @@ def detail(request, id):
         id = int(id)
         if id > 1:
             previous_blog_id = id - 1
+            pre_blog_title = Blog.objects.get(id = str(previous_blog_id))
         else:
             previous_blog_id = None
-        if id < len(Blog.objects.all()):
+            previous_blog_title = None
+        if id < len(Blog.objects.all())+100-11:
             next_blog_id = id + 1
+            next_blog_title = Blog.objects.get(id = str(next_blog_id))
         else:
             next_blog_id = None
+            next_blog_title = None
 
         blog_content = markdown.markdown(blog.content,
                                          extensions=[
@@ -79,6 +83,8 @@ def detail(request, id):
         raise Http404
     return render_to_response('detail.html', {'blog': blog,
                                               'blog_content': blog_content,
+                                              'pre_blog_title': pre_blog_title,
+                                              'next_blog_title': next_blog_title,
                                               'previous': previous_blog_id,
                                               'next': next_blog_id,
                                               'tags': tags, })
